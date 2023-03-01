@@ -3,12 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host=0.0.0.0 --port 8081",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "resolutions": {
+    "**/jasmine-core": "^3.8.0"
+},
+
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.0",
@@ -31,7 +35,7 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^6.0.0-next.1",
-    "jasmine-core": "~3.5.0",
+    "jasmine-core": "^3.8.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
     "karma-chrome-launcher": "~3.1.0",

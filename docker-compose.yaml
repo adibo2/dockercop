@@ -1,0 +1,47 @@
+
+
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_DATABASE: domicile
+      MYSQL_USER: root
+      MYSQL_PASSWORD: adibo
+      MYSQL_ROOT_PASSWORD: adibo
+    ports:
+      - 3306:3306
+    # command: --default-authentication-plugin=mysql_native_password
+
+  nodejs:
+    image: nodeback
+    build: ./node-js-server 
+    environment:
+      DB_HOST: mysql
+      DB_USER: 'root'
+      DB_PASSWORD: 'adibo'
+      DB_NAME: domicile
+      DB_PORT: 3306
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./node-js-server:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+
+  angular:
+    build: ./angular-10-client
+    ports:
+      - 8081:4200
+    volumes:
+      - ./angular-10-client/src:/thomas/frontend/src/app
+    depends_on:
+      - nodejs
+volumes:
+  mysql_data:
